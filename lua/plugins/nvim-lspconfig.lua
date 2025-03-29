@@ -32,6 +32,7 @@ return {
         'html', -- requires npm to be installed
         'lua_ls',
         'jsonls', -- requires npm to be installed
+        'jdtls',
         'lemminx',
         'marksman',
         'quick_lint_js',
@@ -49,6 +50,8 @@ return {
         'isort',
         'mypy',
         'pylint',
+        'java-debug-adapter',
+        'java-test'
       },
     })
 
@@ -63,10 +66,12 @@ return {
     -- Call setup on each LSP server
     require('mason-lspconfig').setup_handlers({
       function(server_name)
-        lspconfig[server_name].setup({
-          on_attach = lsp_attach,
-          capabilities = lsp_capabilities,
-        })
+      if server_name ~= 'jdtls' then
+          lspconfig[server_name].setup({
+            on_attach = lsp_attach,
+            capabilities = lsp_capabilities,
+          })
+        end
       end
     })
 
